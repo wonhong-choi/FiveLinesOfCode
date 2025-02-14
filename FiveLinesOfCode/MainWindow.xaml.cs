@@ -186,8 +186,12 @@ namespace FiveLinesOfCode
             var g = canvas.GetContext("2d");
 
             g.ClearRect(0, 0, (int)canvas.Width, (int)canvas.Height);
-
-            // Draw map
+            
+            DrawMap(g);
+            DrawPlayer(g);
+        }
+        private void DrawMap(GraphicContext g)
+        {
             for (int y = 0; y < _map.Length; y++)
             {
                 for (int x = 0; x < _map[y].Length; x++)
@@ -209,8 +213,10 @@ namespace FiveLinesOfCode
                         g.FillRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
                 }
             }
+        }
 
-            // Draw player
+        private void DrawPlayer(GraphicContext g)
+        {
             g.FillStyle = "#ff0000";
             g.FillRect(_playerX * TILE_SIZE, _playerY * TILE_SIZE, TILE_SIZE, TILE_SIZE);
         }

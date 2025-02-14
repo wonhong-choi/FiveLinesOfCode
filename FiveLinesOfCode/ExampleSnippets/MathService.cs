@@ -30,9 +30,19 @@ namespace FiveLinesOfCode.ExampleSnippets
             {
                 for (int j = 0; j < arr[i].Length; j++)
                 {
-                    result = Math.Min(result, arr[i][j]);
+                    result = Min(arr, result, i, j);
                 }
             }
+            return result;
+        }
+
+        private static int Min(int[][] arr, int result, int i, int j)
+        {
+            if (result > arr[i][j])
+            {
+                result = arr[i][j];
+            }
+
             return result;
         }
     }
