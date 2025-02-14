@@ -1,3 +1,4 @@
+﻿using FiveLinesOfCode.Domain.Input;
 ﻿using FiveLinesOfCode.Game;
 using System;
 using System.Collections.Generic;
@@ -46,7 +47,7 @@ namespace FiveLinesOfCode
             LOCK2
         }
 
-        public enum Input
+        public enum RawInput
         {
             UP, DOWN, LEFT, RIGHT
         }
@@ -64,7 +65,7 @@ namespace FiveLinesOfCode
             new Tile[] {Tile.UNBREAKABLE, Tile.UNBREAKABLE, Tile.UNBREAKABLE, Tile.UNBREAKABLE, Tile.UNBREAKABLE, Tile.UNBREAKABLE, Tile.UNBREAKABLE, Tile.UNBREAKABLE },
         };
 
-        private Queue<Input> _inputs = new Queue<Input>();
+        private Queue<IInput> _inputs = new Queue<IInput>();
 
         public void Remove(Tile tile)
         {
@@ -90,7 +91,6 @@ namespace FiveLinesOfCode
 
         public void MoveHorizontal(int dx)
         {
-
             if (_map[_playerY][_playerX + dx] == Tile.FLUX
               || _map[_playerY][_playerX + dx] == Tile.AIR)
             {
@@ -152,16 +152,9 @@ namespace FiveLinesOfCode
             }
         }
 
-        private void HandleInput(Input current)
+        private void HandleInput(IInput input)
         {
-            if (current == Input.LEFT)
-                MoveHorizontal(-1);
-            else if (current == Input.RIGHT)
-                MoveHorizontal(1);
-            else if (current == Input.UP)
-                MoveVertical(-1);
-            else if (current == Input.DOWN)
-                MoveVertical(1);
+            input.Handle();
         }
 
         private void UpdateMap()
@@ -271,13 +264,12 @@ namespace FiveLinesOfCode
         private const Key RIGHT_KEY = Key.Right;
         private const Key DOWN_KEY = Key.Down;
 
-
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == LEFT_KEY || e.Key == Key.A) _inputs.Enqueue(Input.LEFT);
-            else if (e.Key == UP_KEY || e.Key == Key.W) _inputs.Enqueue(Input.UP);
-            else if (e.Key == RIGHT_KEY || e.Key == Key.D) _inputs.Enqueue(Input.RIGHT);
-            else if (e.Key == DOWN_KEY || e.Key == Key.S) _inputs.Enqueue(Input.DOWN);
+            if (e.Key == LEFT_KEY || e.Key == Key.A) _inputs.Enqueue(new Left());
+            else if (e.Key == UP_KEY || e.Key == Key.W) _inputs.Enqueue(new Up());
+            else if (e.Key == RIGHT_KEY || e.Key == Key.D) _inputs.Enqueue(new Right());
+            else if (e.Key == DOWN_KEY || e.Key == Key.S) _inputs.Enqueue(new Down());
         }
     }
 }

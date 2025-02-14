@@ -63,6 +63,11 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Domain\Input\IInput.cs" />
+    <Compile Include="Domain\Input\Down.cs" />
+    <Compile Include="Domain\Input\Up.cs" />
+    <Compile Include="Domain\Input\Left.cs" />
+    <Compile Include="Domain\Input\Right.cs" />
     <Compile Include="ExampleSnippets\MathService.cs" />
     <Compile Include="Game\HTMLCanvasElement.cs" />
     <Compile Include="MainWindow.xaml.cs">

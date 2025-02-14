@@ -73,5 +73,30 @@ namespace FiveLinesOfCode.ExampleSnippets
             }
             return true;
         }
+
+        public double Average(int[] arr)
+        {
+            AssertNotEmpty(arr);
+
+            return Sum(arr) / Size(arr);
+        }
+
+        private void AssertNotEmpty(int[] arr)
+        {
+            if (Size(arr) == 0)
+            {
+                throw new Exception("Emtpy array not allowed");
+            }
+        }
+
+        private int Sum(int[] arr)
+        {
+            return arr.Sum();
+        }
+
+        private int Size(int[] arr)
+        {
+            return arr.Length;
+        }
     }
 }
