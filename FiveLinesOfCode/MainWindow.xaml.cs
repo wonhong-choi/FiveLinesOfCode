@@ -148,15 +148,20 @@ namespace FiveLinesOfCode
             while (_inputs.Count > 0)
             {
                 var current = _inputs.Dequeue();
-                if (current == Input.LEFT)
-                    MoveHorizontal(-1);
-                else if (current == Input.RIGHT)
-                    MoveHorizontal(1);
-                else if (current == Input.UP)
-                    MoveVertical(-1);
-                else if (current == Input.DOWN)
-                    MoveVertical(1);
+                HandleInput(current);
             }
+        }
+
+        private void HandleInput(Input current)
+        {
+            if (current == Input.LEFT)
+                MoveHorizontal(-1);
+            else if (current == Input.RIGHT)
+                MoveHorizontal(1);
+            else if (current == Input.UP)
+                MoveVertical(-1);
+            else if (current == Input.DOWN)
+                MoveVertical(1);
         }
 
         private void UpdateMap()
@@ -165,31 +170,34 @@ namespace FiveLinesOfCode
             {
                 for (int x = 0; x < _map[y].Length; x++)
                 {
-                    if ((_map[y][x] == Tile.STONE || _map[y][x] == Tile.FALLING_STONE)
-                      && _map[y + 1][x] == Tile.AIR)
-                    {
-                        _map[y + 1][x] = Tile.FALLING_STONE;
-                        _map[y][x] = Tile.AIR;
-                    }
-                    else if ((_map[y][x] == Tile.BOX || _map[y][x] == Tile.FALLING_BOX)
-                      && _map[y + 1][x] == Tile.AIR)
-                    {
-                        _map[y + 1][x] = Tile.FALLING_BOX;
-                        _map[y][x] = Tile.AIR;
-                    }
-                    else if (_map[y][x] == Tile.FALLING_STONE)
-                    {
-                        _map[y][x] = Tile.STONE;
-                    }
-                    else if (_map[y][x] == Tile.FALLING_BOX)
-                    {
-                        _map[y][x] = Tile.BOX;
-                    }
+                    UpdateTile(y, x);
                 }
             }
         }
 
-    
+        private void UpdateTile(int y, int x)
+        {
+            if ((_map[y][x] == Tile.STONE || _map[y][x] == Tile.FALLING_STONE)
+                                  && _map[y + 1][x] == Tile.AIR)
+            {
+                _map[y + 1][x] = Tile.FALLING_STONE;
+                _map[y][x] = Tile.AIR;
+            }
+            else if ((_map[y][x] == Tile.BOX || _map[y][x] == Tile.FALLING_BOX)
+              && _map[y + 1][x] == Tile.AIR)
+            {
+                _map[y + 1][x] = Tile.FALLING_BOX;
+                _map[y][x] = Tile.AIR;
+            }
+            else if (_map[y][x] == Tile.FALLING_STONE)
+            {
+                _map[y][x] = Tile.STONE;
+            }
+            else if (_map[y][x] == Tile.FALLING_BOX)
+            {
+                _map[y][x] = Tile.BOX;
+            }
+        }
 
         public void Draw()
         {

@@ -10,11 +10,11 @@ namespace FiveLinesOfCode.ExampleSnippets
     {
         public bool ContainsEven(int[][] arr)
         {
-            for(int i = 0; i<arr.Length; i++)
+            for (int i = 0; i < arr.Length; i++)
             {
-                for(int j =0; j < arr[i].Length; j++)
+                for (int j = 0; j < arr[i].Length; j++)
                 {
-                    if (arr[i][j] %2 == 0)
+                    if (arr[i][j] % 2 == 0)
                     {
                         return true;
                     }
@@ -44,6 +44,34 @@ namespace FiveLinesOfCode.ExampleSnippets
             }
 
             return result;
+        }
+
+        public void ReportPrimes(int number)
+        {
+            for (int i = 2; i < number; i++)
+            {
+                ReportIfPrime(i);
+            }
+        }
+
+        private void ReportIfPrime(int i)
+        {
+            if (IsPrime(i))
+            {
+                Console.WriteLine($"{i} is prime");
+            }
+        }
+
+        private bool IsPrime(int n)
+        {
+            for (int i = 2; i <= (int)Math.Pow(n, 0.5); ++i)
+            {
+                if (n % i == 0)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }
