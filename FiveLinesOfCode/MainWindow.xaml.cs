@@ -32,6 +32,12 @@ namespace FiveLinesOfCode
         public const int TILE_SIZE = 30;
         public const int FPS = 30;
         public const double SLEEP = 1000 / FPS;
+
+
+
+        private int _playerX = 1;
+        private int _playerY = 1;
+
         public enum RawTile
         {
             AIR,
@@ -48,82 +54,106 @@ namespace FiveLinesOfCode
             LOCK2
         }
 
+
+        private RawTile[][] _rawMap = new RawTile[][]
+        {
+            new RawTile[] { RawTile.UNBREAKABLE, RawTile.UNBREAKABLE, RawTile.UNBREAKABLE, RawTile.UNBREAKABLE, RawTile.UNBREAKABLE, RawTile.UNBREAKABLE, RawTile.UNBREAKABLE, RawTile.UNBREAKABLE, },
+            new RawTile[] { RawTile.UNBREAKABLE, RawTile.PLAYER, RawTile.AIR, RawTile.FLUX, RawTile.FLUX, RawTile.UNBREAKABLE, RawTile.AIR, RawTile.UNBREAKABLE },
+            new RawTile[] { RawTile.UNBREAKABLE, RawTile.STONE, RawTile.UNBREAKABLE, RawTile.BOX, RawTile.FLUX, RawTile.UNBREAKABLE, RawTile.AIR, RawTile.UNBREAKABLE },
+            new RawTile[] { RawTile.UNBREAKABLE, RawTile.KEY1, RawTile.STONE, RawTile.FLUX, RawTile.FLUX, RawTile.UNBREAKABLE, RawTile.AIR, RawTile.UNBREAKABLE },
+            new RawTile[] { RawTile.UNBREAKABLE, RawTile.STONE, RawTile.FLUX, RawTile.FLUX, RawTile.FLUX, RawTile.LOCK1, RawTile.AIR, RawTile.UNBREAKABLE },
+            new RawTile[] { RawTile.UNBREAKABLE, RawTile.UNBREAKABLE, RawTile.UNBREAKABLE, RawTile.UNBREAKABLE, RawTile.UNBREAKABLE, RawTile.UNBREAKABLE, RawTile.UNBREAKABLE, RawTile.UNBREAKABLE, },
+        };
+
+        private ITile[][] _map;
+
+
         public enum RawInput
         {
             UP, DOWN, LEFT, RIGHT
         }
 
-        private int _playerX = 1;
-        private int _playerY = 1;
-
-        private ITile[][] _map = new ITile[][]
-        {
-            new ITile[] { new UnbreakableTile(), new UnbreakableTile(), new UnbreakableTile(), new UnbreakableTile(), new UnbreakableTile(), new UnbreakableTile(), new UnbreakableTile(), new UnbreakableTile()},
-            new ITile[] {new UnbreakableTile(), new PlayerTile(), new AirTile(), new FluxTile(), new FluxTile(), new UnbreakableTile(), new AirTile(), new UnbreakableTile() },
-            new ITile[] {new UnbreakableTile(), new StoneTile(), new UnbreakableTile(), new BoxTile(), new FluxTile(), new UnbreakableTile(), new AirTile(), new UnbreakableTile() },
-            new ITile[] {new UnbreakableTile(), new Key1Tile(), new StoneTile(), new FluxTile(), new FluxTile(), new UnbreakableTile(), new AirTile(), new UnbreakableTile()},
-            new ITile[] {new UnbreakableTile(), new StoneTile(), new FluxTile(), new FluxTile(), new FluxTile(), new Lock1Tile(), new AirTile(), new UnbreakableTile() },
-            new ITile[] { new UnbreakableTile(), new UnbreakableTile(), new UnbreakableTile(), new UnbreakableTile(), new UnbreakableTile(), new UnbreakableTile(), new UnbreakableTile(), new UnbreakableTile()},
-        };
-
         private Queue<IInput> _inputs = new Queue<IInput>();
-
-
+    
         public void MoveToTile(int newx, int newy)
         {
-            _map[_playerY][_playerX] = Tile.AIR;
-            _map[newy][newx] = Tile.PLAYER;
+            _map[_playerY][_playerX] = new AirTile();
+            _map[newy][newx] = new PlayerTile();
             _playerX = newx;
             _playerY = newy;
         }
 
         public void MoveHorizontal(int dx)
         {
-            if (_map[_playerY][_playerX + dx] == Tile.FLUX
-              || _map[_playerY][_playerX + dx] == Tile.AIR)
+            if (_map[_playerY][_playerX + dx].IsFLUX() || _map[_playerY][_playerX + dx].IsAIR())
             {
                 MoveToTile(_playerX + dx, _playerY);
             }
-            else if ((_map[_playerY][_playerX + dx] == Tile.STONE
-              || _map[_playerY][_playerX + dx] == Tile.BOX)
-              && _map[_playerY][_playerX + dx + dx] == Tile.AIR
-              && _map[_playerY + 1][_playerX + dx] != Tile.AIR)
+            else if ((_map[_playerY][_playerX + dx].IsSTONE() || _map[_playerY][_playerX + dx].IsBOX())
+                && _map[_playerY][_playerX + dx + dx].IsAIR()
+              && !_map[_playerY + 1][_playerX + dx].IsAIR())
             {
                 _map[_playerY][_playerX + dx + dx] = _map[_playerY][_playerX + dx];
                 MoveToTile(_playerX + dx, _playerY);
             }
-            else if (_map[_playerY][_playerX + dx] == Tile.KEY1)
+            else if (_map[_playerY][_playerX + dx].IsKEY1())
             {
-                Remove(Tile.LOCK1);
+                RemoveLock1();
                 MoveToTile(_playerX + dx, _playerY);
             }
-            else if (_map[_playerY][_playerX + dx] == Tile.KEY2)
+            else if (_map[_playerY][_playerX + dx].IsKEY2())
             {
-                Remove(Tile.LOCK2);
+                RemoveLock2();
                 MoveToTile(_playerX + dx, _playerY);
             }
         }
-
-
 
         public void MoveVertical(int dy)
         {
-            if (_map[_playerY + dy][_playerX] == Tile.FLUX
-              || _map[_playerY + dy][_playerX] == Tile.AIR)
+            if (_map[_playerY + dy][_playerX].IsFLUX() || _map[_playerY + dy][_playerX].IsAIR())
             {
                 MoveToTile(_playerX, _playerY + dy);
             }
-            else if (_map[_playerY + dy][_playerX] == Tile.KEY1)
+            else if (_map[_playerY + dy][_playerX].IsKEY1())
             {
-                Remove(Tile.LOCK1);
+                RemoveLock1();
                 MoveToTile(_playerX, _playerY + dy);
             }
-            else if (_map[_playerY + dy][_playerX] == Tile.KEY2)
+            else if (_map[_playerY + dy][_playerX].IsKEY2())
             {
-                Remove(Tile.LOCK2);
+                RemoveLock2();
                 MoveToTile(_playerX, _playerY + dy);
             }
         }
+
+        public void RemoveLock1()
+        {
+            for (int y = 0; y < _map.Length; y++)
+            {
+                for (int x = 0; x < _map[y].Length; x++)
+                {
+                    if (_map[y][x].IsLOCK1())
+                    {
+                        _map[y][x] = new AirTile();
+                    }
+                }
+            }
+        }
+
+        public void RemoveLock2()
+        {
+            for (int y = 0; y < _map.Length; y++)
+            {
+                for (int x = 0; x < _map[y].Length; x++)
+                {
+                    if (_map[y][x].IsLOCK2())
+                    {
+                        _map[y][x] = new AirTile();
+                    }
+                }
+            }
+        }
+
 
         public void Update()
         {
@@ -135,14 +165,9 @@ namespace FiveLinesOfCode
         {
             while (_inputs.Count > 0)
             {
-                var current = _inputs.Dequeue();
-                HandleInput(current);
+                var input = _inputs.Dequeue();
+                input.Handle();
             }
-        }
-
-        private void HandleInput(IInput input)
-        {
-            input.Handle();
         }
 
         private void UpdateMap()
@@ -158,25 +183,24 @@ namespace FiveLinesOfCode
 
         private void UpdateTile(int y, int x)
         {
-            if ((_map[y][x] == Tile.STONE || _map[y][x] == Tile.FALLING_STONE)
-                                  && _map[y + 1][x] == Tile.AIR)
+            if ((_map[y][x].IsSTONE() || _map[y][x].IsFALLING_STONE()) && _map[y + 1][x].IsAIR())
             {
-                _map[y + 1][x] = Tile.FALLING_STONE;
-                _map[y][x] = Tile.AIR;
+                _map[y + 1][x] = new FallingStoneTile();
+                _map[y][x] = new AirTile();
             }
-            else if ((_map[y][x] == Tile.BOX || _map[y][x] == Tile.FALLING_BOX)
-              && _map[y + 1][x] == Tile.AIR)
+            else if ((_map[y][x].IsBOX() || _map[y][x].IsFALLING_BOX())
+              && _map[y + 1][x].IsAIR())
             {
-                _map[y + 1][x] = Tile.FALLING_BOX;
-                _map[y][x] = Tile.AIR;
+                _map[y + 1][x] = new FallingBoxTile();
+                _map[y][x] = new AirTile();
             }
-            else if (_map[y][x] == Tile.FALLING_STONE)
+            else if (_map[y][x].IsFALLING_STONE())
             {
-                _map[y][x] = Tile.STONE;
+                _map[y][x] = new StoneTile();
             }
-            else if (_map[y][x] == Tile.FALLING_BOX)
+            else if (_map[y][x].IsFALLING_BOX())
             {
-                _map[y][x] = Tile.BOX;
+                _map[y][x] = new BoxTile();
             }
         }
 
@@ -202,23 +226,28 @@ namespace FiveLinesOfCode
             {
                 for (int x = 0; x < _map[y].Length; x++)
                 {
-                    if (_map[y][x] == Tile.FLUX)
-                        g.FillStyle = "#ccffcc";
-                    else if (_map[y][x] == Tile.UNBREAKABLE)
-                        g.FillStyle = "#999999";
-                    else if (_map[y][x] == Tile.STONE || _map[y][x] == Tile.FALLING_STONE)
-                        g.FillStyle = "#0000cc";
-                    else if (_map[y][x] == Tile.BOX || _map[y][x] == Tile.FALLING_BOX)
-                        g.FillStyle = "#8b4513";
-                    else if (_map[y][x] == Tile.KEY1 || _map[y][x] == Tile.LOCK1)
-                        g.FillStyle = "#ffcc00";
-                    else if (_map[y][x] == Tile.KEY2 || _map[y][x] == Tile.LOCK2)
-                        g.FillStyle = "#00ccff";
+                    ColorOfTile(g, y, x);
 
-                    if (_map[y][x] != Tile.AIR && _map[y][x] != Tile.PLAYER)
+                    if (!_map[y][x].IsAIR() && !_map[y][x].IsPLAYER())
                         g.FillRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
                 }
             }
+        }
+
+        private void ColorOfTile(GraphicContext g, int y, int x)
+        {
+            if (_map[y][x].IsFLUX())
+                g.FillStyle = "#ccffcc";
+            else if (_map[y][x].IsUNBREAKABLE())
+                g.FillStyle = "#999999";
+            else if (_map[y][x].IsSTONE() || _map[y][x].IsFALLING_STONE())
+                g.FillStyle = "#0000cc";
+            else if (_map[y][x].IsBOX() || _map[y][x].IsFALLING_BOX())
+                g.FillStyle = "#8b4513";
+            else if (_map[y][x].IsKEY1() || _map[y][x].IsLOCK1())
+                g.FillStyle = "#ffcc00";
+            else if (_map[y][x].IsKEY2() || _map[y][x].IsLOCK2())
+                g.FillStyle = "#00ccff";
         }
 
         private void DrawPlayer(GraphicContext g)
@@ -240,10 +269,49 @@ namespace FiveLinesOfCode
             Task.Delay(sleep).ContinueWith(task => GameLoop());
         }
 
-
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            TransformMap();
             GameLoop();
+        }
+
+        private void TransformMap()
+        {
+            _map = new ITile[_rawMap.Length][];
+            for (int y = 0; y < _rawMap.Length; y++)
+            {
+                _map[y] = new ITile[_rawMap[y].Length];
+                for (int x = 0; x < _rawMap[y].Length; x++)
+                {
+                    _map[y][x] = TransformTile(_rawMap[y][x]);
+                }
+            }
+        }
+
+        private ITile TransformTile(RawTile tile)
+        {
+            switch (tile)
+            {
+                case RawTile.AIR: return new AirTile();
+                case RawTile.FLUX: return new FluxTile();
+                case RawTile.UNBREAKABLE: return new UnbreakableTile();
+                case RawTile.PLAYER: return new PlayerTile();
+                case RawTile.STONE: return new StoneTile();
+                case RawTile.FALLING_STONE: return new FallingStoneTile();
+                case RawTile.BOX: return new BoxTile();
+                case RawTile.FALLING_BOX: return new FallingBoxTile();
+                case RawTile.KEY1: return new Key1Tile();
+                case RawTile.LOCK1: return new Lock1Tile();
+                case RawTile.KEY2: return new Key2Tile();
+                case RawTile.LOCK2: return new Lock2Tile();
+                default:
+                    AssertExhausted(tile);
+                    return null;
+            }
+        }
+        private static void AssertExhausted(RawTile tile)
+        {
+            throw new Exception("Unexpected tileType");
         }
 
 
@@ -254,10 +322,10 @@ namespace FiveLinesOfCode
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == LEFT_KEY || e.Key == Key.A) _inputs.Enqueue(new Left());
-            else if (e.Key == UP_KEY || e.Key == Key.W) _inputs.Enqueue(new Up());
-            else if (e.Key == RIGHT_KEY || e.Key == Key.D) _inputs.Enqueue(new Right());
-            else if (e.Key == DOWN_KEY || e.Key == Key.S) _inputs.Enqueue(new Down());
+            if (e.Key == LEFT_KEY || e.Key == Key.A) _inputs.Enqueue(new LeftInput());
+            else if (e.Key == UP_KEY || e.Key == Key.W) _inputs.Enqueue(new UpInput());
+            else if (e.Key == RIGHT_KEY || e.Key == Key.D) _inputs.Enqueue(new RightInput());
+            else if (e.Key == DOWN_KEY || e.Key == Key.S) _inputs.Enqueue(new DownInput());
         }
     }
 }
