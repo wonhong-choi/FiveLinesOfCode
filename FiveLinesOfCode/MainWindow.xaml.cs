@@ -1,5 +1,6 @@
 ﻿using FiveLinesOfCode.Domain.Input;
-﻿using FiveLinesOfCode.Game;
+using FiveLinesOfCode.Domain.Tile;
+using FiveLinesOfCode.Game;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,7 +32,7 @@ namespace FiveLinesOfCode
         public const int TILE_SIZE = 30;
         public const int FPS = 30;
         public const double SLEEP = 1000 / FPS;
-        public enum Tile
+        public enum RawTile
         {
             AIR,
             FLUX,
@@ -55,31 +56,18 @@ namespace FiveLinesOfCode
         private int _playerX = 1;
         private int _playerY = 1;
 
-        private Tile[][] _map = new Tile[][]
+        private ITile[][] _map = new ITile[][]
         {
-            new Tile[] {Tile.UNBREAKABLE, Tile.UNBREAKABLE, Tile.UNBREAKABLE, Tile.UNBREAKABLE, Tile.UNBREAKABLE, Tile.UNBREAKABLE, Tile.UNBREAKABLE, Tile.UNBREAKABLE },
-            new Tile[] {Tile.UNBREAKABLE, Tile.PLAYER, Tile.AIR, Tile.FLUX, Tile.FLUX, Tile.UNBREAKABLE, Tile.AIR, Tile.UNBREAKABLE },
-            new Tile[] {Tile.UNBREAKABLE, Tile.STONE, Tile.UNBREAKABLE, Tile.BOX, Tile.FLUX, Tile.UNBREAKABLE, Tile.AIR, Tile.UNBREAKABLE },
-            new Tile[] {Tile.UNBREAKABLE, Tile.KEY1, Tile.STONE, Tile.FLUX, Tile.FLUX, Tile.UNBREAKABLE, Tile.AIR, Tile.UNBREAKABLE },
-            new Tile[] {Tile.UNBREAKABLE, Tile.STONE, Tile.FLUX, Tile.FLUX, Tile.FLUX, Tile.LOCK1, Tile.AIR, Tile.UNBREAKABLE },
-            new Tile[] {Tile.UNBREAKABLE, Tile.UNBREAKABLE, Tile.UNBREAKABLE, Tile.UNBREAKABLE, Tile.UNBREAKABLE, Tile.UNBREAKABLE, Tile.UNBREAKABLE, Tile.UNBREAKABLE },
+            new ITile[] { new UnbreakableTile(), new UnbreakableTile(), new UnbreakableTile(), new UnbreakableTile(), new UnbreakableTile(), new UnbreakableTile(), new UnbreakableTile(), new UnbreakableTile()},
+            new ITile[] {new UnbreakableTile(), new PlayerTile(), new AirTile(), new FluxTile(), new FluxTile(), new UnbreakableTile(), new AirTile(), new UnbreakableTile() },
+            new ITile[] {new UnbreakableTile(), new StoneTile(), new UnbreakableTile(), new BoxTile(), new FluxTile(), new UnbreakableTile(), new AirTile(), new UnbreakableTile() },
+            new ITile[] {new UnbreakableTile(), new Key1Tile(), new StoneTile(), new FluxTile(), new FluxTile(), new UnbreakableTile(), new AirTile(), new UnbreakableTile()},
+            new ITile[] {new UnbreakableTile(), new StoneTile(), new FluxTile(), new FluxTile(), new FluxTile(), new Lock1Tile(), new AirTile(), new UnbreakableTile() },
+            new ITile[] { new UnbreakableTile(), new UnbreakableTile(), new UnbreakableTile(), new UnbreakableTile(), new UnbreakableTile(), new UnbreakableTile(), new UnbreakableTile(), new UnbreakableTile()},
         };
 
         private Queue<IInput> _inputs = new Queue<IInput>();
 
-        public void Remove(Tile tile)
-        {
-            for (int y = 0; y < _map.Length; y++)
-            {
-                for (int x = 0; x < _map[y].Length; x++)
-                {
-                    if (_map[y][x] == tile)
-                    {
-                        _map[y][x] = Tile.AIR;
-                    }
-                }
-            }
-        }
 
         public void MoveToTile(int newx, int newy)
         {

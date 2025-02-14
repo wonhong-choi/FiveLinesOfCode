@@ -6,11 +6,16 @@ using System.Threading.Tasks;
 
 namespace FiveLinesOfCode.Domain.Input
 {
-    public class Down : IInput
+    public class RightInput : IInput
     {
+        public void Handle()
+        {
+            MoveHorizontal(1);
+        }
+
         public bool IsDown()
         {
-            return true;
+            return false;
         }
 
         public bool IsLeft()
@@ -20,17 +25,12 @@ namespace FiveLinesOfCode.Domain.Input
 
         public bool IsRight()
         {
-            return false;
+            return true;
         }
 
         public bool IsUp()
         {
             return false;
-        }
-
-        public void Handle()
-        {
-            MoveVertical(1);
         }
     }
 }

@@ -64,10 +64,23 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Domain\Input\IInput.cs" />
-    <Compile Include="Domain\Input\Down.cs" />
-    <Compile Include="Domain\Input\Up.cs" />
-    <Compile Include="Domain\Input\Left.cs" />
-    <Compile Include="Domain\Input\Right.cs" />
+    <Compile Include="Domain\Input\DownInput.cs" />
+    <Compile Include="Domain\Input\UpInput.cs" />
+    <Compile Include="Domain\Input\LeftInput.cs" />
+    <Compile Include="Domain\Input\RightInput.cs" />
+    <Compile Include="Domain\Tile\UnbreakableTile.cs" />
+    <Compile Include="Domain\Tile\StoneTile.cs" />
+    <Compile Include="Domain\Tile\PlayerTile.cs" />
+    <Compile Include="Domain\Tile\Lock2Tile.cs" />
+    <Compile Include="Domain\Tile\Lock1Tile.cs" />
+    <Compile Include="Domain\Tile\Key2Tile.cs" />
+    <Compile Include="Domain\Tile\Key1Tile.cs" />
+    <Compile Include="Domain\Tile\FluxTile.cs" />
+    <Compile Include="Domain\Tile\FallingStoneTile.cs" />
+    <Compile Include="Domain\Tile\FallingBoxTile.cs" />
+    <Compile Include="Domain\Tile\BoxTile.cs" />
+    <Compile Include="Domain\Tile\AirTile.cs" />
+    <Compile Include="Domain\Tile\ITile.cs" />
     <Compile Include="ExampleSnippets\MathService.cs" />
     <Compile Include="Game\HTMLCanvasElement.cs" />
     <Compile Include="MainWindow.xaml.cs">
