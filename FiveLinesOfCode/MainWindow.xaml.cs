@@ -139,6 +139,12 @@ namespace FiveLinesOfCode
 
         public void Update()
         {
+            HandleInputs();
+            UpdateMap();
+        }
+
+        private void HandleInputs()
+        {
             while (_inputs.Count > 0)
             {
                 var current = _inputs.Dequeue();
@@ -151,7 +157,10 @@ namespace FiveLinesOfCode
                 else if (current == Input.DOWN)
                     MoveVertical(1);
             }
+        }
 
+        private void UpdateMap()
+        {
             for (int y = _map.Length - 1; y >= 0; y--)
             {
                 for (int x = 0; x < _map[y].Length; x++)
@@ -180,16 +189,24 @@ namespace FiveLinesOfCode
             }
         }
 
+    
+
         public void Draw()
+        {
+            GraphicContext g = CreateGraphics();
+            DrawMap(g);
+            DrawPlayer(g);
+        }
+
+        private GraphicContext CreateGraphics()
         {
             var canvas = this.GameCanvas as HTMLCanvasElement;
             var g = canvas.GetContext("2d");
 
             g.ClearRect(0, 0, (int)canvas.Width, (int)canvas.Height);
-            
-            DrawMap(g);
-            DrawPlayer(g);
+            return g;
         }
+
         private void DrawMap(GraphicContext g)
         {
             for (int y = 0; y < _map.Length; y++)
