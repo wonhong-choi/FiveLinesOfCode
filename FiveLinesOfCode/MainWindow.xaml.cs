@@ -226,28 +226,12 @@ namespace FiveLinesOfCode
             {
                 for (int x = 0; x < _map[y].Length; x++)
                 {
-                    ColorOfTile(g, y, x);
+                    _map[y][x].Color(g);
 
                     if (!_map[y][x].IsAIR() && !_map[y][x].IsPLAYER())
                         g.FillRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
                 }
             }
-        }
-
-        private void ColorOfTile(GraphicContext g, int y, int x)
-        {
-            if (_map[y][x].IsFLUX())
-                g.FillStyle = "#ccffcc";
-            else if (_map[y][x].IsUNBREAKABLE())
-                g.FillStyle = "#999999";
-            else if (_map[y][x].IsSTONE() || _map[y][x].IsFALLING_STONE())
-                g.FillStyle = "#0000cc";
-            else if (_map[y][x].IsBOX() || _map[y][x].IsFALLING_BOX())
-                g.FillStyle = "#8b4513";
-            else if (_map[y][x].IsKEY1() || _map[y][x].IsLOCK1())
-                g.FillStyle = "#ffcc00";
-            else if (_map[y][x].IsKEY2() || _map[y][x].IsLOCK2())
-                g.FillStyle = "#00ccff";
         }
 
         private void DrawPlayer(GraphicContext g)

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FiveLinesOfCode.Game;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,11 @@ namespace FiveLinesOfCode.Domain.Tile
 {
     internal class FallingStoneTile : ITile
     {
+        public void Color(GraphicContext g)
+        {
+            g.FillStyle = "#0000cc";
+        }
+
         public bool IsAIR()
         {
             return false;

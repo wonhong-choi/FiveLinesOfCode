@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FiveLinesOfCode.Game;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,11 @@ namespace FiveLinesOfCode.Domain.Tile
 {
     internal class UnbreakableTile : ITile
     {
+        public void Color(GraphicContext g)
+        {
+            g.FillStyle = "#999999";
+        }
+
         public bool IsAIR()
         {
             return false;

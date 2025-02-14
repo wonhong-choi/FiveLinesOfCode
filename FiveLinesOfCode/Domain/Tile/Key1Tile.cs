@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FiveLinesOfCode.Game;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,11 @@ namespace FiveLinesOfCode.Domain.Tile
 {
     internal class Key1Tile : ITile
     {
+        public void Color(GraphicContext g)
+        {
+            g.FillStyle = "#ffcc00";
+        }
+
         public bool IsAIR()
         {
             return false;

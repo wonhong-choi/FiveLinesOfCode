@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FiveLinesOfCode.Game;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,5 +21,7 @@ namespace FiveLinesOfCode.Domain.Tile
         bool IsLOCK1();
         bool IsKEY2();
         bool IsLOCK2();
+
+        void Color(GraphicContext g);
     }
 }
