@@ -226,10 +226,7 @@ namespace FiveLinesOfCode
             {
                 for (int x = 0; x < _map[y].Length; x++)
                 {
-                    _map[y][x].Color(g);
-
-                    if (!_map[y][x].IsAIR() && !_map[y][x].IsPLAYER())
-                        g.FillRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+                    _map[y][x].Draw(g, y, x);
                 }
             }
         }

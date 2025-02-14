@@ -22,6 +22,6 @@ namespace FiveLinesOfCode.Domain.Tile
         bool IsKEY2();
         bool IsLOCK2();
 
-        void Color(GraphicContext g);
+        void Draw(GraphicContext g, int y, int x);
     }
 }

@@ -9,9 +9,10 @@ namespace FiveLinesOfCode.Domain.Tile
 {
     internal class UnbreakableTile : ITile
     {
-        public void Color(GraphicContext g)
+        public void Draw(GraphicContext g, int y, int x)
         {
             g.FillStyle = "#999999";
+            g.FillRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
         }
 
         public bool IsAIR()

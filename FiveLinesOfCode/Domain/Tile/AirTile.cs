@@ -9,7 +9,7 @@ namespace FiveLinesOfCode.Domain.Tile
 {
     internal class AirTile : ITile
     {
-        public void Color(GraphicContext g)
+        public void Draw(GraphicContext g, int y, int x)
         {
         }
 
