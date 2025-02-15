@@ -15,10 +15,6 @@ namespace FiveLinesOfCode.Domain.Tile
             g.FillRect(x * TileConfig.TILE_SIZE, y * TileConfig.TILE_SIZE, TileConfig.TILE_SIZE, TileConfig.TILE_SIZE);
         }
 
-        public void Drop()
-        {
-        }
-
         public bool IsAIR()
         {
             return false;
@@ -42,10 +38,6 @@ namespace FiveLinesOfCode.Domain.Tile
         public void MoveVertical(int dy)
         {
             MoveToTile(_playerX, _playerY + dy);
-        }
-
-        public void Rest()
-        {
         }
 
         public bool CanFall()

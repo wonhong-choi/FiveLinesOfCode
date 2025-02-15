@@ -16,10 +16,6 @@ namespace FiveLinesOfCode.Domain.Tile
 
         }
 
-        public void Drop()
-        {
-        }
-
         public bool IsAIR()
         {
             return false;
@@ -40,10 +36,6 @@ namespace FiveLinesOfCode.Domain.Tile
         }
 
         public void MoveVertical(int dy)
-        {
-        }
-
-        public void Rest()
         {
         }
 

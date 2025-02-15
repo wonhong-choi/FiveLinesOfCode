@@ -13,10 +13,6 @@ namespace FiveLinesOfCode.Domain.Tile
         {
         }
 
-        public void Drop()
-        {
-        }
-
         public bool IsAIR()
         {
             return true;
@@ -40,10 +36,6 @@ namespace FiveLinesOfCode.Domain.Tile
         public void MoveVertical(int dy)
         {
             MoveToTile(_playerX, _playerY + dy);
-        }
-
-        public void Rest()
-        {
         }
 
         public bool CanFall()

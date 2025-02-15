@@ -1,4 +1,5 @@
 ﻿using FiveLinesOfCode.Domain.FallingState;
+using FiveLinesOfCode.Domain.FallStrategy;
 using FiveLinesOfCode.Game;
 using System;
 using System.Collections.Generic;
@@ -10,22 +11,17 @@ namespace FiveLinesOfCode.Domain.Tile
 {
     internal class StoneTile : ITile
     {
-        private IFallingState _fallingState;
+        private FallStrategy.FallStrategy _fallStrategy;
 
         public StoneTile(IFallingState fallingState)
         {
-            _fallingState = fallingState;
+            _fallStrategy = new FallStrategy.FallStrategy(fallingState);
         }
 
         public void Draw(GraphicContext g, int y, int x)
         {
             g.FillStyle = "#0000cc";
             g.FillRect(x * TileConfig.TILE_SIZE, y * TileConfig.TILE_SIZE, TileConfig.TILE_SIZE, TileConfig.TILE_SIZE);
-        }
-
-        public void Drop()
-        {
-            _fallingState = new FallingState.FallingState();
         }
 
         public bool IsAIR()
@@ -45,16 +41,11 @@ namespace FiveLinesOfCode.Domain.Tile
 
         public void MoveHorizontal(int dx)
         {
-            _fallingState.MoveHorizontal(this, dx);
+            _fallStrategy.GetFallingState().MoveHorizontal(this, dx);
         }
 
         public void MoveVertical(int dy)
         {
-        }
-
-        public void Rest()
-        {
-            _fallingState = new RestingState();
         }
 
         public bool CanFall()
@@ -64,16 +55,7 @@ namespace FiveLinesOfCode.Domain.Tile
 
         public void Update(int x, int y)
         {
-            if (_map[y + 1][x].IsAIR())
-            {
-                Drop();
-                _map[y + 1][x] = this;
-                _map[y][x] = new AirTile();
-            }
-            else if (_fallingState.IsFalling())
-            {
-                Rest();
-            }
+            _fallStrategy.Update(this, x, y);
         }
     }
 }

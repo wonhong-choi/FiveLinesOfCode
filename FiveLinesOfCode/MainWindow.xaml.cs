@@ -149,8 +149,6 @@ namespace FiveLinesOfCode
         private void UpdateTile(int y, int x)
         {
             _map[y][x].Update(x, y);
-
-           
         }
 
         public void Draw()

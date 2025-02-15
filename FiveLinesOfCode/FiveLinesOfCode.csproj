@@ -66,6 +66,7 @@
     <Compile Include="Domain\FallingState\RestingState.cs" />
     <Compile Include="Domain\FallingState\FallingState.cs" />
     <Compile Include="Domain\FallingState\IFallingState.cs" />
+    <Compile Include="Domain\FallStrategy\FallStrategy.cs" />
     <Compile Include="Domain\Input\IInput.cs" />
     <Compile Include="Domain\Input\DownInput.cs" />
     <Compile Include="Domain\Input\UpInput.cs" />

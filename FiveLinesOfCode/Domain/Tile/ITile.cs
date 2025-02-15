@@ -15,8 +15,6 @@ namespace FiveLinesOfCode.Domain.Tile
         void Draw(GraphicContext g, int y, int x);
         void MoveHorizontal(int dx);
         void MoveVertical(int dy);
-        void Drop();
-        void Rest();
         bool CanFall();
         void Update(int x, int y);
     }
