@@ -22,6 +22,14 @@ namespace FiveLinesOfCode.Domain.Tile
         bool IsKEY2();
         bool IsLOCK2();
 
+        bool IsEdible();
+
+        bool IsPushable();
+
         void Draw(GraphicContext g, int y, int x);
+
+        void MoveHorizontal(int dx);
+        
+        void MoveVertical(int dy)
     }
 }

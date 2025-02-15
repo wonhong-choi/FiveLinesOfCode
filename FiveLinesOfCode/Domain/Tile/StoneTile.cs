@@ -25,6 +25,11 @@ namespace FiveLinesOfCode.Domain.Tile
             return false;
         }
 
+        public bool IsEdible()
+        {
+            return false;
+        }
+
         public bool IsFALLING_BOX()
         {
             return false;
@@ -65,6 +70,11 @@ namespace FiveLinesOfCode.Domain.Tile
             return false;
         }
 
+        public bool IsPushable()
+        {
+            return true;
+        }
+
         public bool IsSTONE()
         {
             return true;
@@ -73,6 +83,19 @@ namespace FiveLinesOfCode.Domain.Tile
         public bool IsUNBREAKABLE()
         {
             return false;
+        }
+
+        public void MoveHorizontal(int dx)
+        {
+            if (_map[_playerY][_playerX + dx + dx].IsAIR() && !_map[_playerY + 1][_playerX + dx].IsAIR())
+            {
+                _map[_playerY][_playerX + dx + dx] = this;
+                MoveToTile(_playerX + dx, _playerY);
+            }
+        }
+
+        public void MoveVertical(int dy)
+        {
         }
     }
 }

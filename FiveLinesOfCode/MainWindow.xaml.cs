@@ -85,45 +85,12 @@ namespace FiveLinesOfCode
 
         public void MoveHorizontal(int dx)
         {
-            if (_map[_playerY][_playerX + dx].IsFLUX() || _map[_playerY][_playerX + dx].IsAIR())
-            {
-                MoveToTile(_playerX + dx, _playerY);
-            }
-            else if ((_map[_playerY][_playerX + dx].IsSTONE() || _map[_playerY][_playerX + dx].IsBOX())
-                && _map[_playerY][_playerX + dx + dx].IsAIR()
-              && !_map[_playerY + 1][_playerX + dx].IsAIR())
-            {
-                _map[_playerY][_playerX + dx + dx] = _map[_playerY][_playerX + dx];
-                MoveToTile(_playerX + dx, _playerY);
-            }
-            else if (_map[_playerY][_playerX + dx].IsKEY1())
-            {
-                RemoveLock1();
-                MoveToTile(_playerX + dx, _playerY);
-            }
-            else if (_map[_playerY][_playerX + dx].IsKEY2())
-            {
-                RemoveLock2();
-                MoveToTile(_playerX + dx, _playerY);
-            }
+            _map[_playerY][_playerX + dx].MoveHorizontal(dx);
         }
 
         public void MoveVertical(int dy)
         {
-            if (_map[_playerY + dy][_playerX].IsFLUX() || _map[_playerY + dy][_playerX].IsAIR())
-            {
-                MoveToTile(_playerX, _playerY + dy);
-            }
-            else if (_map[_playerY + dy][_playerX].IsKEY1())
-            {
-                RemoveLock1();
-                MoveToTile(_playerX, _playerY + dy);
-            }
-            else if (_map[_playerY + dy][_playerX].IsKEY2())
-            {
-                RemoveLock2();
-                MoveToTile(_playerX, _playerY + dy);
-            }
+            _map[_playerY + dy][_playerX].MoveVertical(dy);
         }
 
         public void RemoveLock1()
