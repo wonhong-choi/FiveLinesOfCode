@@ -10,7 +10,6 @@ namespace FiveLinesOfCode.Domain.Tile
     public interface ITile
     {
         bool IsAIR();
-        bool IsFalling();
         bool IsLOCK1();
         bool IsLOCK2();
         void Draw(GraphicContext g, int y, int x);
@@ -19,5 +18,6 @@ namespace FiveLinesOfCode.Domain.Tile
         void Drop();
         void Rest();
         bool CanFall();
+        void Update(int x, int y);
     }
 }

@@ -25,11 +25,6 @@ namespace FiveLinesOfCode.Domain.Tile
             return false;
         }
 
-        public bool IsFalling()
-        {
-            return false;
-        }
-
         public bool IsLOCK1()
         {
             return true;
@@ -55,6 +50,10 @@ namespace FiveLinesOfCode.Domain.Tile
         public bool CanFall()
         {
             return false;
+        }
+
+        public void Update(int x, int y)
+        {
         }
     }
 }

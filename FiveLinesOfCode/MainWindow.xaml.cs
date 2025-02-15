@@ -148,16 +148,9 @@ namespace FiveLinesOfCode
 
         private void UpdateTile(int y, int x)
         {
-            if (_map[y][x].CanFall() && _map[y + 1][x].IsAIR())
-            {
-                _map[y][x].Drop();
-                _map[y + 1][x] = _map[y][x];
-                _map[y][x] = new AirTile();
-            }
-            else if (_map[y][x].IsFalling())
-            {
-                _map[y][x].Rest();
-            }
+            _map[y][x].Update(x, y);
+
+           
         }
 
         public void Draw()

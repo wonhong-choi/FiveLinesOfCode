@@ -33,11 +33,6 @@ namespace FiveLinesOfCode.Domain.Tile
             return false;
         }
 
-        public bool IsFalling()
-        {
-            return _fallingState.IsFalling();
-        }
-
         public bool IsLOCK1()
         {
             return false;
@@ -65,6 +60,20 @@ namespace FiveLinesOfCode.Domain.Tile
         public bool CanFall()
         {
             return true;
+        }
+
+        public void Update(int x, int y)
+        {
+            if (_map[y + 1][x].IsAIR())
+            {
+                Drop();
+                _map[y + 1][x] = this;
+                _map[y][x] = new AirTile();
+            }
+            else if (_fallingState.IsFalling())
+            {
+                Rest();
+            }
         }
     }
 }
