@@ -24,47 +24,7 @@ namespace FiveLinesOfCode.Domain.Tile
             return false;
         }
 
-        public bool IsBOX()
-        {
-            return false;
-        }
-
-        public bool IsBoxy()
-        {
-            return false;
-        }
-
-        public bool IsEdible()
-        {
-            return false;
-        }
-
         public bool IsFalling()
-        {
-            return false;
-        }
-
-        public bool IsFALLING_BOX()
-        {
-            return false;
-        }
-
-        public bool IsFALLING_STONE()
-        {
-            return false;
-        }
-
-        public bool IsFLUX()
-        {
-            return false;
-        }
-
-        public bool IsKEY1()
-        {
-            return false;
-        }
-
-        public bool IsKEY2()
         {
             return false;
         }
@@ -79,31 +39,6 @@ namespace FiveLinesOfCode.Domain.Tile
             return false;
         }
 
-        public bool IsPLAYER()
-        {
-            return false;
-        }
-
-        public bool IsPushable()
-        {
-            return false;
-        }
-
-        public bool IsSTONE()
-        {
-            return false;
-        }
-
-        public bool IsStony()
-        {
-            return false;
-        }
-
-        public bool IsUNBREAKABLE()
-        {
-            return true;
-        }
-
         public void MoveHorizontal(int dx)
         {
         }
@@ -115,6 +50,7 @@ namespace FiveLinesOfCode.Domain.Tile
         public void Rest()
         {
         }
+
         public bool CanFall()
         {
             return false;

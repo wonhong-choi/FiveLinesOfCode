@@ -33,49 +33,9 @@ namespace FiveLinesOfCode.Domain.Tile
             return false;
         }
 
-        public bool IsBOX()
-        {
-            return true;
-        }
-
-        public bool IsBoxy()
-        {
-            return true;
-        }
-
-        public bool IsEdible()
-        {
-            return false;
-        }
-
         public bool IsFalling()
         {
             return _fallingState.IsFalling();
-        }
-
-        public bool IsFALLING_BOX()
-        {
-            return _fallingState.IsFalling();
-        }
-
-        public bool IsFALLING_STONE()
-        {
-            return false;
-        }
-
-        public bool IsFLUX()
-        {
-            return false;
-        }
-
-        public bool IsKEY1()
-        {
-            return false;
-        }
-
-        public bool IsKEY2()
-        {
-            return false;
         }
 
         public bool IsLOCK1()
@@ -84,31 +44,6 @@ namespace FiveLinesOfCode.Domain.Tile
         }
 
         public bool IsLOCK2()
-        {
-            return false;
-        }
-
-        public bool IsPLAYER()
-        {
-            return false;
-        }
-
-        public bool IsPushable()
-        {
-            return true;
-        }
-
-        public bool IsSTONE()
-        {
-            return false;
-        }
-
-        public bool IsStony()
-        {
-            return false;
-        }
-
-        public bool IsUNBREAKABLE()
         {
             return false;
         }
