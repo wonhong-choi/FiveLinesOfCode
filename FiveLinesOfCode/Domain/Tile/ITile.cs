@@ -29,7 +29,9 @@ namespace FiveLinesOfCode.Domain.Tile
         void Draw(GraphicContext g, int y, int x);
 
         void MoveHorizontal(int dx);
-        
-        void MoveVertical(int dy)
+
+        void MoveVertical(int dy);
+        bool IsStony();
+        bool IsBoxy();
     }
 }

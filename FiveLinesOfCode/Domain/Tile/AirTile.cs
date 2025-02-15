@@ -23,6 +23,11 @@ namespace FiveLinesOfCode.Domain.Tile
             return false;
         }
 
+        public bool IsBoxy()
+        {
+            return false;
+        }
+
         public bool IsEdible()
         {
             return true;
@@ -78,6 +83,11 @@ namespace FiveLinesOfCode.Domain.Tile
             return false;
         }
 
+        public bool IsStony()
+        {
+            return false;
+        }
+
         public bool IsUNBREAKABLE()
         {
             return false;
@@ -92,5 +102,7 @@ namespace FiveLinesOfCode.Domain.Tile
         {
             MoveToTile(_playerX, _playerY + dy);
         }
+
+
     }
 }

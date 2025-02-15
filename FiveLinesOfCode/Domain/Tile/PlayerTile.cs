@@ -23,6 +23,11 @@ namespace FiveLinesOfCode.Domain.Tile
             return false;
         }
 
+        public bool IsBoxy()
+        {
+            return false;
+        }
+
         public bool IsEdible()
         {
             return false;
@@ -74,6 +79,11 @@ namespace FiveLinesOfCode.Domain.Tile
         }
 
         public bool IsSTONE()
+        {
+            return false;
+        }
+
+        public bool IsStony()
         {
             return false;
         }

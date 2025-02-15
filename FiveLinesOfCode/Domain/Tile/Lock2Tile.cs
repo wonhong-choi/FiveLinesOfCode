@@ -12,7 +12,7 @@ namespace FiveLinesOfCode.Domain.Tile
         public void Draw(GraphicContext g, int y, int x)
         {
             g.FillStyle = "#00ccff";
-            g.FillRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+            g.FillRect(x * TileConfig.TILE_SIZE, y * TileConfig.TILE_SIZE, TileConfig.TILE_SIZE, TileConfig.TILE_SIZE);
         }
 
         public bool IsAIR()
@@ -21,6 +21,11 @@ namespace FiveLinesOfCode.Domain.Tile
         }
 
         public bool IsBOX()
+        {
+            return false;
+        }
+
+        public bool IsBoxy()
         {
             return false;
         }
@@ -76,6 +81,11 @@ namespace FiveLinesOfCode.Domain.Tile
         }
 
         public bool IsSTONE()
+        {
+            return false;
+        }
+
+        public bool IsStony()
         {
             return false;
         }

@@ -1,4 +1,5 @@
-﻿using FiveLinesOfCode.Domain.Input;
+﻿using FiveLinesOfCode.Domain.FallingState;
+using FiveLinesOfCode.Domain.Input;
 using FiveLinesOfCode.Domain.Tile;
 using FiveLinesOfCode.Game;
 using System;
@@ -29,11 +30,8 @@ namespace FiveLinesOfCode
             InitializeComponent();
         }
 
-        public const int TILE_SIZE = 30;
         public const int FPS = 30;
         public const double SLEEP = 1000 / FPS;
-
-
 
         private int _playerX = 1;
         private int _playerY = 1;
@@ -150,20 +148,19 @@ namespace FiveLinesOfCode
 
         private void UpdateTile(int y, int x)
         {
-            if ((_map[y][x].IsSTONE() || _map[y][x].IsFALLING_STONE()) && _map[y + 1][x].IsAIR())
+            if ((_map[y][x].IsStony()) && _map[y + 1][x].IsAIR())
             {
-                _map[y + 1][x] = new FallingStoneTile();
+                _map[y + 1][x] = new StoneTile(new FallingState());
                 _map[y][x] = new AirTile();
             }
-            else if ((_map[y][x].IsBOX() || _map[y][x].IsFALLING_BOX())
-              && _map[y + 1][x].IsAIR())
+            else if (_map[y][x].IsBoxy() && _map[y + 1][x].IsAIR())
             {
                 _map[y + 1][x] = new FallingBoxTile();
                 _map[y][x] = new AirTile();
             }
             else if (_map[y][x].IsFALLING_STONE())
             {
-                _map[y][x] = new StoneTile();
+                _map[y][x] = new StoneTile(new RestingState());
             }
             else if (_map[y][x].IsFALLING_BOX())
             {
@@ -201,7 +198,7 @@ namespace FiveLinesOfCode
         private void DrawPlayer(GraphicContext g)
         {
             g.FillStyle = "#ff0000";
-            g.FillRect(_playerX * TILE_SIZE, _playerY * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+            g.FillRect(_playerX * TileConfig.TILE_SIZE, _playerY * TileConfig.TILE_SIZE, TileConfig.TILE_SIZE, TileConfig.TILE_SIZE);
         }
 
 
@@ -244,8 +241,8 @@ namespace FiveLinesOfCode
                 case RawTile.FLUX: return new FluxTile();
                 case RawTile.UNBREAKABLE: return new UnbreakableTile();
                 case RawTile.PLAYER: return new PlayerTile();
-                case RawTile.STONE: return new StoneTile();
-                case RawTile.FALLING_STONE: return new FallingStoneTile();
+                case RawTile.STONE: return new StoneTile(new RestingState());
+                case RawTile.FALLING_STONE: return new StoneTile(new FallingState());
                 case RawTile.BOX: return new BoxTile();
                 case RawTile.FALLING_BOX: return new FallingBoxTile();
                 case RawTile.KEY1: return new Key1Tile();
@@ -261,7 +258,6 @@ namespace FiveLinesOfCode
         {
             throw new Exception("Unexpected tileType");
         }
-
 
         private const Key LEFT_KEY = Key.Left;
         private const Key UP_KEY = Key.Up;

@@ -1,4 +1,5 @@
-﻿using FiveLinesOfCode.Game;
+﻿using FiveLinesOfCode.Domain.FallingState;
+using FiveLinesOfCode.Game;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +10,17 @@ namespace FiveLinesOfCode.Domain.Tile
 {
     internal class StoneTile : ITile
     {
+        private IFallingState _fallingState;
+
+        public StoneTile(IFallingState fallingState)
+        {
+            _fallingState = fallingState;
+        }
+
         public void Draw(GraphicContext g, int y, int x)
         {
             g.FillStyle = "#0000cc";
-            g.FillRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+            g.FillRect(x * TileConfig.TILE_SIZE, y * TileConfig.TILE_SIZE, TileConfig.TILE_SIZE, TileConfig.TILE_SIZE);
         }
 
         public bool IsAIR()
@@ -21,6 +29,11 @@ namespace FiveLinesOfCode.Domain.Tile
         }
 
         public bool IsBOX()
+        {
+            return false;
+        }
+
+        public bool IsBoxy()
         {
             return false;
         }
@@ -37,7 +50,7 @@ namespace FiveLinesOfCode.Domain.Tile
 
         public bool IsFALLING_STONE()
         {
-            return false;
+            return _fallingState.IsFalling();
         }
 
         public bool IsFLUX()
@@ -80,6 +93,11 @@ namespace FiveLinesOfCode.Domain.Tile
             return true;
         }
 
+        public bool IsStony()
+        {
+            return true;
+        }
+
         public bool IsUNBREAKABLE()
         {
             return false;
@@ -87,11 +105,7 @@ namespace FiveLinesOfCode.Domain.Tile
 
         public void MoveHorizontal(int dx)
         {
-            if (_map[_playerY][_playerX + dx + dx].IsAIR() && !_map[_playerY + 1][_playerX + dx].IsAIR())
-            {
-                _map[_playerY][_playerX + dx + dx] = this;
-                MoveToTile(_playerX + dx, _playerY);
-            }
+            _fallingState.MoveHorizontal(this, dx);
         }
 
         public void MoveVertical(int dy)
