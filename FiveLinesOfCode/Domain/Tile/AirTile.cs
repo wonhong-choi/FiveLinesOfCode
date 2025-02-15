@@ -13,6 +13,10 @@ namespace FiveLinesOfCode.Domain.Tile
         {
         }
 
+        public void Drop()
+        {
+        }
+
         public bool IsAIR()
         {
             return true;
@@ -31,6 +35,11 @@ namespace FiveLinesOfCode.Domain.Tile
         public bool IsEdible()
         {
             return true;
+        }
+
+        public bool IsFalling()
+        {
+            return false;
         }
 
         public bool IsFALLING_BOX()
@@ -103,6 +112,13 @@ namespace FiveLinesOfCode.Domain.Tile
             MoveToTile(_playerX, _playerY + dy);
         }
 
+        public void Rest()
+        {
+        }
 
+        public bool CanFall()
+        {
+            return false;
+        }
     }
 }

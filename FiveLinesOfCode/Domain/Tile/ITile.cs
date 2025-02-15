@@ -17,6 +17,7 @@ namespace FiveLinesOfCode.Domain.Tile
         bool IsFALLING_STONE();
         bool IsBOX();
         bool IsFALLING_BOX();
+        bool IsFalling();
         bool IsKEY1();
         bool IsLOCK1();
         bool IsKEY2();
@@ -33,5 +34,9 @@ namespace FiveLinesOfCode.Domain.Tile
         void MoveVertical(int dy);
         bool IsStony();
         bool IsBoxy();
+
+        void Drop();
+        void Rest();
+        bool CanFall();
     }
 }

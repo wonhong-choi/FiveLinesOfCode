@@ -13,6 +13,10 @@ namespace FiveLinesOfCode.Domain.Tile
         {
         }
 
+        public void Drop()
+        {
+        }
+
         public bool IsAIR()
         {
             return false;
@@ -29,6 +33,11 @@ namespace FiveLinesOfCode.Domain.Tile
         }
 
         public bool IsEdible()
+        {
+            return false;
+        }
+
+        public bool IsFalling()
         {
             return false;
         }
@@ -99,6 +108,15 @@ namespace FiveLinesOfCode.Domain.Tile
 
         public void MoveVertical(int dy)
         {
+        }
+
+        public void Rest()
+        {
+        }
+
+        public bool CanFall()
+        {
+            return false;
         }
     }
 }

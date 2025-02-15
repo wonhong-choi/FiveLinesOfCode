@@ -148,23 +148,15 @@ namespace FiveLinesOfCode
 
         private void UpdateTile(int y, int x)
         {
-            if ((_map[y][x].IsStony()) && _map[y + 1][x].IsAIR())
+            if (_map[y][x].CanFall() && _map[y + 1][x].IsAIR())
             {
-                _map[y + 1][x] = new StoneTile(new FallingState());
+                _map[y][x].Drop();
+                _map[y + 1][x] = _map[y][x];
                 _map[y][x] = new AirTile();
             }
-            else if (_map[y][x].IsBoxy() && _map[y + 1][x].IsAIR())
+            else if (_map[y][x].IsFalling())
             {
-                _map[y + 1][x] = new BoxTile(new FallingState());
-                _map[y][x] = new AirTile();
-            }
-            else if (_map[y][x].IsFALLING_STONE())
-            {
-                _map[y][x] = new StoneTile(new RestingState());
-            }
-            else if (_map[y][x].IsFALLING_BOX())
-            {
-                _map[y][x] = new BoxTile(new RestingState());
+                _map[y][x].Rest();
             }
         }
 
