@@ -80,7 +80,6 @@
     <Compile Include="Domain\Tile\Key2Tile.cs" />
     <Compile Include="Domain\Tile\Key1Tile.cs" />
     <Compile Include="Domain\Tile\FluxTile.cs" />
-    <Compile Include="Domain\Tile\FallingBoxTile.cs" />
     <Compile Include="Domain\Tile\BoxTile.cs" />
     <Compile Include="Domain\Tile\AirTile.cs" />
     <Compile Include="Domain\Tile\ITile.cs" />

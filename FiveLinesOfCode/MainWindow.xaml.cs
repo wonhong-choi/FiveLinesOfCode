@@ -155,7 +155,7 @@ namespace FiveLinesOfCode
             }
             else if (_map[y][x].IsBoxy() && _map[y + 1][x].IsAIR())
             {
-                _map[y + 1][x] = new FallingBoxTile();
+                _map[y + 1][x] = new BoxTile(new FallingState());
                 _map[y][x] = new AirTile();
             }
             else if (_map[y][x].IsFALLING_STONE())
@@ -164,7 +164,7 @@ namespace FiveLinesOfCode
             }
             else if (_map[y][x].IsFALLING_BOX())
             {
-                _map[y][x] = new BoxTile();
+                _map[y][x] = new BoxTile(new RestingState());
             }
         }
 
@@ -243,8 +243,8 @@ namespace FiveLinesOfCode
                 case RawTile.PLAYER: return new PlayerTile();
                 case RawTile.STONE: return new StoneTile(new RestingState());
                 case RawTile.FALLING_STONE: return new StoneTile(new FallingState());
-                case RawTile.BOX: return new BoxTile();
-                case RawTile.FALLING_BOX: return new FallingBoxTile();
+                case RawTile.BOX: return new BoxTile(new RestingState()) ;
+                case RawTile.FALLING_BOX: return new BoxTile(new FallingState());
                 case RawTile.KEY1: return new Key1Tile();
                 case RawTile.LOCK1: return new Lock1Tile();
                 case RawTile.KEY2: return new Key2Tile();

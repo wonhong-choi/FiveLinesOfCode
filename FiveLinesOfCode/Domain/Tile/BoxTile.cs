@@ -1,4 +1,5 @@
-﻿using FiveLinesOfCode.Game;
+﻿using FiveLinesOfCode.Domain.FallingState;
+using FiveLinesOfCode.Game;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,13 @@ namespace FiveLinesOfCode.Domain.Tile
 {
     internal class BoxTile : ITile
     {
+        private IFallingState _fallingState;
+
+        public BoxTile(IFallingState fallingState)
+        {
+            _fallingState = fallingState;
+        }
+
         public void Draw(GraphicContext g, int y, int x)
         {
             g.FillStyle = "#8b4513";
@@ -38,7 +46,7 @@ namespace FiveLinesOfCode.Domain.Tile
 
         public bool IsFALLING_BOX()
         {
-            return false;
+            return _fallingState.IsFalling();
         }
 
         public bool IsFALLING_STONE()
@@ -98,11 +106,7 @@ namespace FiveLinesOfCode.Domain.Tile
 
         public void MoveHorizontal(int dx)
         {
-            if (_map[_playerY][_playerX + dx + dx].IsAIR() && !_map[_playerY + 1][_playerX + dx].IsAIR())
-            {
-                _map[_playerY][_playerX + dx + dx] = this;
-                MoveToTile(_playerX + dx, _playerY);
-            }
+            _fallingState.MoveHorizontal(this, dx);
         }
 
         public void MoveVertical(int dy)
